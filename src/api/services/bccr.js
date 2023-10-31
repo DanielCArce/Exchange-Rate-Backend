@@ -11,15 +11,19 @@ import { toJson } from 'xml2json'
  * @returns {string}
  */
 async function transform_response({ rawData, filename }) {
-    let xmlFileW = await write_file({ filename, extension: 'xml', data: rawData })
+    await write_file({ filename, extension: 'xml', data: rawData })
     let xmlFileR = await read_file({ filename, extension: 'xml' });
-    let jsonFileW = await write_file({ filename, extension: 'json', data: await toJson(xmlFileR) })
+    await write_file({ filename, extension: 'json', data: await toJson(xmlFileR) })
     let jsonFileR = await read_file({filename,extension:'json'})
-    return jsonFileR;
+    let isNested = Object.hasOwn(jsonFileR["DataSet"]["diffgr:diffgram"]["Datos_de_INGC011_CAT_INDICADORECONOMIC"]["INGC011_CAT_INDICADORECONOMIC"], "NUM_VALOR");
+    if (!isNested) {
+        throw new Error('BCCR API is not resolved correctly')
+    }
+    return jsonFileR["DataSet"]["diffgr:diffgram"]["Datos_de_INGC011_CAT_INDICADORECONOMIC"]["INGC011_CAT_INDICADORECONOMIC"]["NUM_VALOR"]
 }
-export async function getIndicatorAPI({start_date,end_date,indicatorCode}) {
+export async function getIndicatorAPI({start_date,end_date,indicatorCode,bank}) {
 const URL= `${process.env.ENDPOINT_BCCR}Indicador=${indicatorCode}&FechaInicio=${start_date}&FechaFinal=${end_date}&Nombre=${process.env.NAME_BCCR}&SubNiveles=${process.env.SUBNIVEL_BCCR}&CorreoElectronico=${process.env.EMAIL_BCCR}&Token=${process.env.TOKEN_BCCR}`
     const res = await fetch(URL)
     const rawData = await res.text()
-    return await transform_response({rawData,filename:indicatorCode})
+    return await transform_response({rawData,filename:`${indicatorCode}-${bank}`})
 }
