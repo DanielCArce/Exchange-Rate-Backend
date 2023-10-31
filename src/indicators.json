@@ -1,0 +1,40 @@
+{
+  "AllBanks": [
+    {
+      "buy": "3186",
+      "sell": "3220",
+      "name": "Banco Promerica",
+      "has_subnivel":false
+    },
+    {
+      "buy": "3181",
+      "sell": "3215",
+      "name": "Banco BAC Credomatic",
+      "has_subnivel":false
+    },
+    {
+      "buy": "3149",
+      "sell": "3208",
+      "name": "Banco Nacional de Costa Rica",
+      "has_subnivel":false
+    },
+    {
+      "buy": "3148",
+      "sell": "3207",
+      "name": "Banco de Costa Rica",
+      "has_subnivel":false
+    },
+    {
+      "buy": "3179",
+      "sell": "3209",
+      "name": "Banco Popular y de Dessarollo Comunal",
+      "has_subnivel":false
+    },
+    {
+      "buy": "317",
+      "sell": "318",
+      "name": "Banco Central de Costa Rica",
+      "has_subnivel":false
+    }
+  ]
+}
